@@ -12,4 +12,9 @@ You've bought 5 {Product Name}!" Replace {Product Name} with the actual name of 
 # Submission Guidelines:
 - Github repo link (public)
 - Must attach screenshots in README.md file
+
+![img.png](img.png)
+![img_1.png](img_1.png)
+![img_2.png](img_2.png)
+
 - Submitting zip, pdf, and docx is not allowed.
