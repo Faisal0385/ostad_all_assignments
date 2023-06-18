@@ -97,6 +97,7 @@ class _ProductListState extends State<ProductList> {
                           if (int.parse(productListItems[index]['qty']) == 5) {
                             ///4 show a dialog box with the message
                             showDialog(
+                              barrierDismissible: false,
                               context: context,
                               builder: (context) {
                                 return AlertDialog(
