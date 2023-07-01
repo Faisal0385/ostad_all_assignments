@@ -118,6 +118,7 @@ class _HomePageState extends State<HomePage> {
                 Navigator.pop(context);
               },
               child: const Text("Cancel")),
+
           ///5. Implement a "Save" button in the dialog to add the new task to the task list.
           ElevatedButton(
               onPressed: () {
@@ -196,12 +197,25 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(
                   height: 10,
                 ),
+
                 ///9. The bottom sheet will always be closed when delete is pressed.
                 ElevatedButton(
                   child: const Text('Delete'),
                   onPressed: () => {
                     myTaskList.removeAt(index),
                     setState(() {}),
+                    // Show snack bar msg
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      backgroundColor: Colors.green,
+                      content: Center(
+                        child: Text(
+                          'Item Delete Successfully!!',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      duration: Duration(seconds: 3),
+                    )),
                     Navigator.pop(context)
                   },
                 ),
