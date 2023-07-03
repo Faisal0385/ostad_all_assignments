@@ -57,7 +57,8 @@ class _MyHomeState extends State<MyHome> {
                 ListTile(
                   onTap: (){
                     // The bottom sheet should show the task details
-                    showDialogBoxWithDelete(context, index);
+                    // showDialogBoxWithDelete(context, index);
+                    showAddNewTodoModelSheet(index);
                   },
                   title: Text(
                     myContactList[index].name,
@@ -71,43 +72,40 @@ class _MyHomeState extends State<MyHome> {
       ),
     );
   }
+  
+  /// show model sheet
+  void showAddNewTodoModelSheet(index) {
+    showModalBottomSheet(
+      isScrollControlled: true,
 
-  void showDialogBoxWithDelete(context, index) {
-    showBottomSheet(
       context: context,
-      builder: (BuildContext context) {
+      builder: (context) {
         return Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Container(
-            width: double.infinity,
+          child: SizedBox(
             height: 200,
+            width: double.infinity,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Contact Details:',
-                      style:
-                      TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Text('Name: ${myContactList[index].name}'),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text('Email: ${myContactList[index].email}'),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text('Phone Number: ${myContactList[index].contact}'),
-                  ],
+              children: [
+              const Text(
+                  'Contact Details:',
+                  style:
+                  TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                 ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Text('Name: ${myContactList[index].name}'),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text('Email: ${myContactList[index].email}'),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text('Phone Number: ${myContactList[index].contact}'
+                ),
+
               ],
             ),
           ),
@@ -115,6 +113,7 @@ class _MyHomeState extends State<MyHome> {
       },
     );
   }
+
 }
 
 // making a contact list
