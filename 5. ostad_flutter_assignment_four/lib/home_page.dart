@@ -85,7 +85,7 @@ class _HomePageState extends State<HomePage> {
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
-              child: TextField(
+              child: TextFormField(
                 controller: _myDescription,
                 minLines: 3,
                 // any number you need (It works as the rows for the textarea)
@@ -125,6 +125,7 @@ class _HomePageState extends State<HomePage> {
                 if (_myTitle.text.isNotEmpty &&
                     _myDescription.text.isNotEmpty &&
                     _myDays.text.isNotEmpty) {
+
                   myTaskList.add(
                     TaskList(_myTitle.text, _myDescription.text, _myDays.text),
                   );
