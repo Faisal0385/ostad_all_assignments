@@ -72,7 +72,7 @@ class _MyHomeState extends State<MyHome> {
       ),
     );
   }
-  
+
   /// show model sheet
   void showAddNewTodoModelSheet(index) {
     showModalBottomSheet(
