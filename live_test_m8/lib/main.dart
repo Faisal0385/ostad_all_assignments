@@ -57,7 +57,6 @@ class _MyHomeState extends State<MyHome> {
                 ListTile(
                   onTap: (){
                     // The bottom sheet should show the task details
-                    // showDialogBoxWithDelete(context, index);
                     showAddNewTodoModelSheet(index);
                   },
                   title: Text(
