@@ -36,18 +36,18 @@ Widget landscapeMode() {
           height: 200,
           width: 200,
           child: CircleAvatar(
-            backgroundImage: NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSz9uuLzKtya3Wx-R4iId-flA2-reZvwg1E1ZjfZZ0il_7Q3D9tV2GAdHBptKzsWJr9K20&usqp=CAU'),
+            backgroundImage: NetworkImage(
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSz9uuLzKtya3Wx-R4iId-flA2-reZvwg1E1ZjfZZ0il_7Q3D9tV2GAdHBptKzsWJr9K20&usqp=CAU'),
           ),
         ),
       ),
-
       Expanded(
         child: Column(
           children: [
             const Padding(
               padding: EdgeInsets.all(5.0),
               child: Text(
-                "Faisal A Salam",
+                "Faisal A. Salam",
                 style: TextStyle(fontSize: 24),
               ),
             ),
@@ -56,9 +56,7 @@ Widget landscapeMode() {
               child: Text(
                 "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
                 textAlign: TextAlign.justify,
-                style: TextStyle(
-                  fontSize: 20
-                ),
+                style: TextStyle(fontSize: 20),
               ),
             ),
             Expanded(
@@ -80,8 +78,6 @@ Widget landscapeMode() {
           ],
         ),
       ),
-
-
     ],
   );
 }
@@ -93,13 +89,14 @@ Widget portraitMode() {
         height: 200,
         width: 200,
         child: const CircleAvatar(
-          backgroundImage: NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSz9uuLzKtya3Wx-R4iId-flA2-reZvwg1E1ZjfZZ0il_7Q3D9tV2GAdHBptKzsWJr9K20&usqp=CAU'),
+          backgroundImage: NetworkImage(
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSz9uuLzKtya3Wx-R4iId-flA2-reZvwg1E1ZjfZZ0il_7Q3D9tV2GAdHBptKzsWJr9K20&usqp=CAU'),
         ),
       ),
       const Padding(
         padding: EdgeInsets.all(16.0),
         child: Text(
-          "Faisal A Salam",
+          "Faisal A. Salam",
           style: TextStyle(fontSize: 30),
         ),
       ),
