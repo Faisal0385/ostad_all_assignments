@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Profile"),
+        title: const Text("News Feed"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -27,51 +33,64 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
+
+Widget portraitMode() {
+  return Column(
+    children: [
+      Expanded(
+        child: GridView.builder(
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent:500,
+                childAspectRatio: 3 / 2,
+                crossAxisSpacing: 20,
+                mainAxisSpacing: 10),
+            itemCount: 20,
+            itemBuilder: (BuildContext ctx, index) {
+              return Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        Image.network(
+                            "https://i0.wp.com/www.flutterbeads.com/wp-content/uploads/2021/11/set-background-image-flutter-hero.jpeg?resize=950%2C500&ssl=1"),
+                        const SizedBox(height: 10,),
+                        const Text("Today's News")
+                      ],
+                    ),
+                  ));
+            }),
+      )
+    ],
+  );
+}
+
 Widget landscapeMode() {
   return Row(
     children: [
-      const Padding(
-        padding: EdgeInsets.all(12.0),
-        child: SizedBox(
-          height: 200,
-          width: 200,
-          child: CircleAvatar(
-            backgroundImage: NetworkImage(
-                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSz9uuLzKtya3Wx-R4iId-flA2-reZvwg1E1ZjfZZ0il_7Q3D9tV2GAdHBptKzsWJr9K20&usqp=CAU'),
-          ),
-        ),
-      ),
       Expanded(
         child: Column(
           children: [
-            const Padding(
-              padding: EdgeInsets.all(5.0),
-              child: Text(
-                "Faisal A. Salam",
-                style: TextStyle(fontSize: 24),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text(
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
-                textAlign: TextAlign.justify,
-                style: TextStyle(fontSize: 20),
-              ),
-            ),
             Expanded(
               child: GridView.builder(
                   gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 200,
+                      maxCrossAxisExtent: 400,
                       childAspectRatio: 3 / 2,
                       crossAxisSpacing: 20,
                       mainAxisSpacing: 10),
                   itemCount: 20,
                   itemBuilder: (BuildContext ctx, index) {
-                    return Container(
-                      alignment: Alignment.center,
-                      child: Image.network(
-                          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqeZ5mVbarupP8UWVic7UtumtbIyE0GY-ucQ&usqp=CAU"),
+                    return Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          children: [
+                            Image.network(
+                                "https://i0.wp.com/www.flutterbeads.com/wp-content/uploads/2021/11/set-background-image-flutter-hero.jpeg?resize=950%2C500&ssl=1"),
+                            const SizedBox(height: 10,),
+                            const Text("Today's News")
+                          ],
+                        ),
+                      ),
                     );
                   }),
             ),
@@ -82,51 +101,4 @@ Widget landscapeMode() {
   );
 }
 
-Widget portraitMode() {
-  return Column(
-    children: [
-      Container(
-        height: 200,
-        width: 200,
-        child: const CircleAvatar(
-          backgroundImage: NetworkImage(
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSz9uuLzKtya3Wx-R4iId-flA2-reZvwg1E1ZjfZZ0il_7Q3D9tV2GAdHBptKzsWJr9K20&usqp=CAU'),
-        ),
-      ),
-      const Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Text(
-          "Faisal A. Salam",
-          style: TextStyle(fontSize: 30),
-        ),
-      ),
-      const Padding(
-        padding: EdgeInsets.all(8.0),
-        child: Text(
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. "
-              "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, "
-              "when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-          textAlign: TextAlign.justify,
-        ),
-      ),
-      const SizedBox(
-        height: 20,
-      ),
-      Expanded(
-        child: GridView.builder(
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 200,
-                childAspectRatio: 3 / 2,
-                crossAxisSpacing: 20,
-                mainAxisSpacing: 10),
-            itemCount: 20,
-            itemBuilder: (BuildContext ctx, index) {
-              return Container(
-                  alignment: Alignment.center,
-                  child: Image.network(
-                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqeZ5mVbarupP8UWVic7UtumtbIyE0GY-ucQ&usqp=CAU"));
-            }),
-      )
-    ],
-  );
-}
+
