@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ostad_todo_list_project/data/models/auth_utility.dart';
 import 'package:ostad_todo_list_project/ui/screens/add_new_task_screen.dart';
 import 'package:ostad_todo_list_project/ui/widgets/summary_card.dart';
 import 'package:ostad_todo_list_project/ui/widgets/task_list_title.dart';
@@ -48,7 +49,7 @@ class NewTaskScreen extends StatelessWidget {
             const SizedBox( height: 20, ),
             Expanded(
               child: ListView.separated(
-                itemCount: 10,
+                itemCount: 5,
                 itemBuilder: (context, index) {
                   return TaskListTitle();
                 },
