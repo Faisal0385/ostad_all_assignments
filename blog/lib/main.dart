@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '/app/views/splash/splash_screen.dart';
 import '/app/constants/app_string.dart';
+import '/app/constants/colors.dart';
 
 
 void main() async {
@@ -23,7 +24,10 @@ class MyApp extends StatelessWidget {
       return GetMaterialApp(
         title: APP_NAME,
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(),
+        theme: ThemeData(
+          primarySwatch: kBaseColorToDark
+        ),
+        defaultTransition: Transition.noTransition,
         home: const SplashScreen(),
       );
     });

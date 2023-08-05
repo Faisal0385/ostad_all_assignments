@@ -17,7 +17,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   checkLogin() {
-    Future.delayed(const Duration(seconds: 3)).then((value){
+    Future.delayed(const Duration(milliseconds: 100)).then((value){
       bool isLoggedIn = GetStorage().read(IS_LOGGED_IN) ?? false;
 
       if (isLoggedIn) {
@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Get.offAll(() => const AdminDashboardScreen());
         }
       } else {
-        Get.offAll(() => const SigninScreen());
+        Get.offAll(() => const SignInScreen());
       }
     });
 
@@ -48,16 +48,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: Image.asset(
-            'assets/images/splash_logo.png',
-            width: 100.w,
-            height: 100.w,
-          ),
-        ),
-      ),
-    );
+    return const Scaffold();
   }
 }
