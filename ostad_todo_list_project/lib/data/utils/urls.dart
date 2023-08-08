@@ -12,9 +12,12 @@ class Urls {
   static String completedTasks = '$_baseUrl/listTaskByStatus/Completed';
 
   static String deleteTask(String id) => '$_baseUrl/deleteTask/$id';
-  static String recoverVerifyEmail(String email) => '$_baseUrl/RecoverVerifyEmail/$email';
+  static String sendOtpToEmail(String email) => '$_baseUrl/RecoverVerifyEmail/$email';
   static String recoverVerifyOTPPin(String email, String pin) => '$_baseUrl/RecoverVerifyOTP/$email/$pin';
 
   static String updateTask(String id, String status) =>
       '$_baseUrl/updateTaskStatus/$id/$status';
+
+  static String updateProfile = '$_baseUrl/profileUpdate';
+  static String resetPassword = '$_baseUrl/RecoverResetPass';
 }

@@ -10,39 +10,49 @@ import 'package:ostad_todo_list_project/ui/widgets/screen_background.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
-  const OtpVerificationScreen(String email, {Key? key}) : super(key: key);
+  final String email;
+
+  const OtpVerificationScreen({Key? key, required this.email})
+      : super(key: key);
 
   @override
   State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
 }
 
 class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
-
+  bool _otpVerificationInProgress = false;
   final TextEditingController _pinTEController = TextEditingController();
 
-  Future<void> recoverVerifyOTPPin(String email, String pin) async {
-    final NetworkResponse response =
-    await NetworkCaller().getRequest(Urls.recoverVerifyOTPPin(email, pin));
+  Future<void> recoverVerifyOTPPin() async {
+    _otpVerificationInProgress = true;
+    if (mounted) {
+      setState(() {});
+    }
+    final NetworkResponse response = await NetworkCaller().getRequest(
+        Urls.recoverVerifyOTPPin(widget.email, _pinTEController.text));
+    _otpVerificationInProgress = false;
+    if (mounted) {
+      setState(() {});
+    }
     if (response.isSuccess) {
-      log(email);
-      log(pin);
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ResetPasswordScreen(),
-        ),
-      );
-    } else {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Recover Verify Email Has Been Failed'),
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ResetPasswordScreen(
+              email: widget.email,
+              otp: _pinTEController.text,
+            ),
           ),
         );
       }
+    } else {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Otp verification has been failed!')));
+      }
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -114,7 +124,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      recoverVerifyOTPPin(AutofillHints.email, _pinTEController.text.trim());
+                      recoverVerifyOTPPin();
                     },
                     child: const Text("Verify"),
                   ),

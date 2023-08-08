@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ostad_todo_list_project/data/models/auth_utility.dart';
 import 'package:ostad_todo_list_project/ui/screens/auth/login_screen.dart';
@@ -37,14 +38,10 @@ class _UserProfileBannerState extends State<UserProfileBanner> {
               visible: (widget.isUpdateScreen ?? false) == false,
               child: Row(
                 children: [
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      AuthUtility.userInfo.data?.photo ?? '',
-                    ),
-                    onBackgroundImageError: (_, __) {
-                      const Icon(Icons.image);
-                    },
-                    radius: 15,
+                  CachedNetworkImage(
+                    placeholder: (_, __) => const Icon(Icons.account_circle_outlined),
+                    imageUrl: AuthUtility.userInfo.data?.photo ?? '',
+                    errorWidget: (_, __, ___) => const Icon(Icons.account_circle_outlined),
                   ),
                   const SizedBox(
                     width: 16,
