@@ -9,6 +9,7 @@ import 'package:ostad_todo_list_project/data/utils/urls.dart';
 import 'package:ostad_todo_list_project/ui/screens/add_new_task_screen.dart';
 import 'package:ostad_todo_list_project/ui/screens/update_task_bottom_sheet.dart';
 import 'package:ostad_todo_list_project/ui/screens/update_task_status_sheet.dart';
+import 'package:ostad_todo_list_project/ui/widgets/screen_background.dart';
 import 'package:ostad_todo_list_project/ui/widgets/summary_card.dart';
 import 'package:ostad_todo_list_project/ui/widgets/task_list_title.dart';
 import 'package:ostad_todo_list_project/ui/widgets/user_profile_banner.dart';
@@ -102,7 +103,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+      body: ScreenBackground(
         child: Column(
           children: [
             const UserProfileBanner(),
@@ -163,7 +164,8 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                         },
                         separatorBuilder: (BuildContext context, int index) {
                           return const Divider(
-                            height: 4,
+                            height: 10,
+                            color: Colors.green,
                           );
                         },
                       ),

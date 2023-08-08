@@ -1,11 +1,48 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:ostad_todo_list_project/data/models/network_response.dart';
+import 'package:ostad_todo_list_project/data/services/network_caller.dart';
+import 'package:ostad_todo_list_project/data/utils/urls.dart';
 import 'package:ostad_todo_list_project/ui/screens/auth/login_screen.dart';
 import 'package:ostad_todo_list_project/ui/screens/auth/reset_password_screen.dart';
 import 'package:ostad_todo_list_project/ui/widgets/screen_background.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-class OtpVerificationScreen extends StatelessWidget {
-  const OtpVerificationScreen({Key? key}) : super(key: key);
+class OtpVerificationScreen extends StatefulWidget {
+  const OtpVerificationScreen(String email, {Key? key}) : super(key: key);
+
+  @override
+  State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
+}
+
+class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
+
+  final TextEditingController _pinTEController = TextEditingController();
+
+  Future<void> recoverVerifyOTPPin(String email, String pin) async {
+    final NetworkResponse response =
+    await NetworkCaller().getRequest(Urls.recoverVerifyOTPPin(email, pin));
+    if (response.isSuccess) {
+      log(email);
+      log(pin);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ResetPasswordScreen(),
+        ),
+      );
+    } else {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Recover Verify Email Has Been Failed'),
+          ),
+        );
+      }
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +74,7 @@ class OtpVerificationScreen extends StatelessWidget {
                   height: 16,
                 ),
                 PinCodeTextField(
+                  controller: _pinTEController,
                   length: 6,
                   obscureText: false,
                   keyboardType: TextInputType.number,
@@ -76,12 +114,7 @@ class OtpVerificationScreen extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const ResetPasswordScreen()),
-                          (route) => false);
+                      recoverVerifyOTPPin(AutofillHints.email, _pinTEController.text.trim());
                     },
                     child: const Text("Verify"),
                   ),
