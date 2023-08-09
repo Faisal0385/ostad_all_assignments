@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ostad_todo_list_project/data/models/auth_utility.dart';
@@ -26,8 +28,12 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   final TextEditingController _emailTEController = TextEditingController();
   final TextEditingController _passwordTEController = TextEditingController();
   bool _profileInProgress = false;
-  ImagePicker picker = ImagePicker();
+
+  File? imagePath;
+  String? imageData;
+
   XFile? imageFile;
+  ImagePicker picker = ImagePicker();
 
   @override
   void initState() {
@@ -36,6 +42,19 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     _firstNameTEController.text = userData.firstName ?? '';
     _lastNameTEController.text = userData.lastName ?? '';
     _mobileTEController.text = userData.mobile ?? '';
+  }
+
+  void selectImage() {
+    picker.pickImage(source: ImageSource.gallery).then((xFile) {
+      if (xFile != null) {
+        imageFile = xFile;
+        imagePath = File(imageFile!.path);
+        imageData = base64Encode(imagePath!.readAsBytesSync());
+        if (mounted) {
+          setState(() {});
+        }
+      }
+    });
   }
 
   Future<void> updateProfile() async {
@@ -47,14 +66,14 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
       "firstName": _firstNameTEController.text.trim(),
       "lastName": _lastNameTEController.text.trim(),
       "mobile": _mobileTEController.text.trim(),
-      "photo": ""
+      "photo": imageData,
     };
     if (_passwordTEController.text.isNotEmpty) {
       requestBody['password'] = _passwordTEController.text;
     }
 
     final NetworkResponse response =
-    await NetworkCaller().postRequest(Urls.updateProfile, requestBody);
+        await NetworkCaller().postRequest(Urls.updateProfile, requestBody);
     _profileInProgress = false;
     if (mounted) {
       setState(() {});
@@ -76,7 +95,6 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
       }
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -102,6 +120,13 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       ),
                       const SizedBox(
                         height: 30,
+                      ),
+                      SizedBox(
+                        width: 100,
+                        height: 100,
+                        child: imageFile != null
+                            ? Image.file(imagePath!)
+                            : const Icon(Icons.image, size: 50,),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
@@ -142,7 +167,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                             TextFormField(
                               controller: _firstNameTEController,
                               keyboardType: TextInputType.text,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 hintText: "First Name",
                               ),
                               validator: (String? value) {
@@ -158,7 +183,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                             TextFormField(
                               controller: _lastNameTEController,
                               keyboardType: TextInputType.text,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 hintText: "Last Name",
                               ),
                               validator: (String? value) {
@@ -174,7 +199,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                             TextFormField(
                               controller: _mobileTEController,
                               keyboardType: TextInputType.phone,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 hintText: "Mobile",
                               ),
                               validator: (String? value) {
@@ -210,17 +235,18 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                               width: double.infinity,
                               child: _profileInProgress
                                   ? const Center(
-                                child: CircularProgressIndicator(),
-                              )
+                                      child: CircularProgressIndicator(),
+                                    )
                                   : ElevatedButton(
-                                onPressed: () {
-                                  if (!_formKey.currentState!.validate()) {
-                                    return;
-                                  }
-                                  updateProfile();
-                                },
-                                child: const Text('Update'),
-                              ),
+                                      onPressed: () {
+                                        if (!_formKey.currentState!
+                                            .validate()) {
+                                          return;
+                                        }
+                                        updateProfile();
+                                      },
+                                      child: const Text('Update'),
+                                    ),
                             ),
                             const SizedBox(
                               height: 16,
@@ -237,16 +263,5 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
         ),
       ),
     );
-  }
-
-  void selectImage() {
-    picker.pickImage(source: ImageSource.gallery).then((xFile) {
-      if (xFile != null) {
-        imageFile = xFile;
-        if (mounted) {
-          setState(() {});
-        }
-      }
-    });
   }
 }

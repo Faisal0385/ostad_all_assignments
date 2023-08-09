@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:ostad_todo_list_project/data/models/login_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,6 +11,7 @@ class AuthUtility{
     SharedPreferences _sharedPrefs = await SharedPreferences.getInstance();
     await _sharedPrefs.setString('user-data', jsonEncode(model.toJson()));
     userInfo = model;
+
   }
 
   static Future<void> updateUserInfo(UserData data) async {
