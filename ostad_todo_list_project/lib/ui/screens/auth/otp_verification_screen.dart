@@ -122,11 +122,17 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                 ),
                 SizedBox(
                   width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      recoverVerifyOTPPin();
-                    },
-                    child: const Text("Verify"),
+                  child: Visibility(
+                    visible: _otpVerificationInProgress == false,
+                    replacement: const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        recoverVerifyOTPPin();
+                      },
+                      child: const Text("Verify"),
+                    ),
                   ),
                 ),
                 const SizedBox(

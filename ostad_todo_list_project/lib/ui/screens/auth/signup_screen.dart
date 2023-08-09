@@ -73,20 +73,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(
-                    height: 150,
+                    height: 100,
                   ),
                   Text(
                     "Join With Us",
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   const SizedBox(
-                    height: 12,
+                    height: 20,
                   ),
                   TextFormField(
                     controller: _firstNameTEController,
                     keyboardType: TextInputType.text,
                     decoration: const InputDecoration(
-                      hintText: "First Name",
+                      label: Text("First Name"),
                     ),
                     validator: (String? value) {
                       if (value?.isEmpty ?? true) {
@@ -96,13 +96,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                   ),
                   const SizedBox(
-                    height: 12,
+                    height: 20,
                   ),
                   TextFormField(
                     controller: _lastNameTEController,
                     keyboardType: TextInputType.text,
                     decoration: const InputDecoration(
-                      hintText: "Last Name",
+                      label: Text("Last Name"),
                     ),
                     validator: (String? value) {
                       if (value?.isEmpty ?? true) {
@@ -112,13 +112,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                   ),
                   const SizedBox(
-                    height: 12,
+                    height: 20,
                   ),
                   TextFormField(
                     controller: _mobileTEController,
                     keyboardType: TextInputType.phone,
                     decoration: const InputDecoration(
-                      hintText: "Mobile",
+                      label: Text("Mobile"),
                     ),
                     validator: (String? value) {
                       if ((value?.isEmpty ?? true) || value!.length < 11) {
@@ -128,13 +128,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                   ),
                   const SizedBox(
-                    height: 12,
+                    height: 20,
                   ),
                   TextFormField(
                     controller: _emailTEController,
                     keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(
-                      hintText: "Email",
+                      label: Text("Email"),
                     ),
                     validator: (String? value) {
                       if (value?.isEmpty ?? true) {
@@ -144,13 +144,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                   ),
                   const SizedBox(
-                    height: 12,
+                    height: 20,
                   ),
                   TextFormField(
                     controller: _passwordTEController,
                     obscureText: true,
                     decoration: const InputDecoration(
-                      hintText: "Password",
+                      label: Text("Password"),
                     ),
                     validator: (String? value) {
                       if ((value?.isEmpty ?? true) || value!.length <= 5) {
@@ -160,7 +160,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                   ),
                   const SizedBox(
-                    height: 16,
+                    height: 20,
                   ),
                   SizedBox(
                     width: double.infinity,
@@ -180,7 +180,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                   const SizedBox(
-                    height: 16,
+                    height: 20,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

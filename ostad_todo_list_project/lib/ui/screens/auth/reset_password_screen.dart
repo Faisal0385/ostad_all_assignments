@@ -124,14 +124,20 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   ),
                   SizedBox(
                     width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (!_formKey.currentState!.validate()) {
-                          return;
-                        }
-                        resetPassword();
-                      },
-                      child: const Text("Confirm"),
+                    child: Visibility(
+                      visible: _setPasswordInProgress == false,
+                      replacement: const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (!_formKey.currentState!.validate()) {
+                            return;
+                          }
+                          resetPassword();
+                        },
+                        child: const Text("Confirm"),
+                      ),
                     ),
                   ),
                   const SizedBox(

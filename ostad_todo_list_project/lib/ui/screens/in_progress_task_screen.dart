@@ -118,7 +118,36 @@ class _InProgressTaskScreenState extends State<InProgressTaskScreen> {
                         return TaskListTitle(
                           data: _taskListModel.data![index],
                           onDeleteTap: () {
-                            deleteTask(_taskListModel.data![index].sId!);
+                            showDialog<String>(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                title: const Text(
+                                  'Delete Task',
+                                  style: TextStyle(color: Colors.green),
+                                ),
+                                content: const Text('Are You Sure?'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(context, 'Cancel'),
+                                    child: const Text(
+                                      'Cancel',
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () => {
+                                      deleteTask(
+                                          _taskListModel.data![index].sId!),
+                                      Navigator.pop(context, 'OK'),
+                                    },
+                                    child: const Text('OK'),
+                                  ),
+                                ],
+                              ),
+                            );
                           },
                           onEditTap: () {
                             showStatusUpdateBottomSheet(

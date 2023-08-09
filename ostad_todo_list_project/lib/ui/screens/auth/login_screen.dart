@@ -17,51 +17,51 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  @override
-  Widget build(BuildContext context) {
+  bool _loginInProgress = false;
 
-    bool _loginInProgress = false;
+  final TextEditingController _emailTEController = TextEditingController();
+  final TextEditingController _passwordTEController = TextEditingController();
 
-    final TextEditingController _emailTEController = TextEditingController();
-    final TextEditingController _passwordTEController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-    Future<void> login() async{
-      _loginInProgress = true;
-      if (mounted) {
-        setState(() {});
-      }
-
-      Map<String, dynamic> responseBody = {
-        "email" : _emailTEController.text.trim(),
-        "password":_passwordTEController.text
-      };
-      final NetworkResponse response = await NetworkCaller().postRequest(Urls.login, responseBody, isLogin: true);
-
-      _loginInProgress = false;
-      if (mounted) {
-        setState(() {});
-      }
-
-      if (response.isSuccess) {
-        LoginModel model = LoginModel.fromJson(response.body!);
-        await AuthUtility.saveUserInfo(model);
-        if (mounted) {
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const BottomNavBaseScreen()),
-                  (route) => false);
-        }
-      } else {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Incorrect email or password')));
-        }
-      }
+  Future<void> login() async {
+    _loginInProgress = true;
+    if (mounted) {
+      setState(() {});
     }
 
+    Map<String, dynamic> responseBody = {
+      "email": _emailTEController.text.trim(),
+      "password": _passwordTEController.text
+    };
+    final NetworkResponse response = await NetworkCaller()
+        .postRequest(Urls.login, responseBody, isLogin: true);
+
+    _loginInProgress = false;
+    if (mounted) {
+      setState(() {});
+    }
+
+    if (response.isSuccess) {
+      LoginModel model = LoginModel.fromJson(response.body!);
+      await AuthUtility.saveUserInfo(model);
+      if (mounted) {
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const BottomNavBaseScreen()),
+            (route) => false);
+      }
+    } else {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Incorrect email or password')));
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: ScreenBackground(
         child: SingleChildScrollView(
