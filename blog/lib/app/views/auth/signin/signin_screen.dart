@@ -38,11 +38,11 @@ class _SignInScreenState extends State<SignInScreen> {
               SizedBox(
                 height: 50.w,
               ),
-              _signInLogo(),
+              _logo(),
               SizedBox(
                 height: 20.w,
               ),
-              _signInTitle(),
+              _title(),
               SizedBox(
                 height: 25.w,
               ),
@@ -166,7 +166,7 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  Widget _signInTitle() {
+  Widget _title() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -178,7 +178,7 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  Widget _signInLogo() {
+  Widget _logo() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
