@@ -38,132 +38,155 @@ class _SignInScreenState extends State<SignInScreen> {
               SizedBox(
                 height: 50.w,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    "assets/images/splash_logo.png",
-                    width: 100.w,
-                  )
-                ],
-              ),
+              _signInLogo(),
               SizedBox(
                 height: 20.w,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Sign In With Us",
-                    style: TextStyle(fontSize: 22.sp),
-                  ),
-                ],
-              ),
+              _signInTitle(),
               SizedBox(
                 height: 25.w,
               ),
-              TextFormField(
-                controller: _emailController,
-                style: TextStyle(fontSize: 14.sp),
-                decoration: InputDecoration(
-                    enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: kBaseColor, width: 2),
-                    ),
-                    border: const OutlineInputBorder(
-                      borderSide: BorderSide(color: kBaseColor),
-                    ),
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: 15.w, vertical: 13.w),
-                    label: const Text("Email"),
-                    prefixIcon: const Icon(
-                      Icons.email,
-                      color: kBaseColor,
-                    )),
-                validator: MultiValidator([
-                  RequiredValidator(errorText: "Email is required"),
-                  EmailValidator(errorText: "Enter a valid email")
-                ]),
-              ),
+              _emailField(),
               SizedBox(
                 height: 15.w,
               ),
-              TextFormField(
-                controller: _passwordController,
-                style: TextStyle(fontSize: 14.sp),
-                obscureText: hidePassword,
-                decoration: InputDecoration(
-                    enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: kBaseColor, width: 2),
-                    ),
-                    border: const OutlineInputBorder(
-                      borderSide: BorderSide(color: kBaseColor),
-                    ),
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: 15.w, vertical: 13.w),
-                    label: const Text("Password"),
-                    prefixIcon: const Icon(
-                      Icons.password,
-                      color: kBaseColor,
-                    ),
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        hidePassword = !hidePassword;
-                        if (mounted) {
-                          setState(() {});
-                        }
-                      },
-                      icon: hidePassword
-                          ? const Icon(Icons.visibility)
-                          : const Icon(Icons.visibility_off),
-                    )),
-                validator: MultiValidator([
-                  RequiredValidator(errorText: "Password is required"),
-                  MinLengthValidator(6,
-                      errorText: "Password must be 6 character long.")
-                ]),
-              ),
+              _passwordField(),
               SizedBox(
                 height: 15.w,
               ),
-              ElevatedButton(
-                onPressed: () {},
-                child: Text(
-                  "Sign In",
-                  style: TextStyle(
-                    fontSize: 15.sp,
-                  ),
-                ),
-              ),
+              _signInButton(),
               SizedBox(
                 height: 15.w,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Get.to(() => const SignUpScreen());
-                    },
-                    child: Text(
-                      "Create Account",
-                      style: TextStyle(fontSize: 14.sp),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Get.to(() => const ForgotPasswordScreen());
-                    },
-                    child: Text(
-                      "Forgot Password?",
-                      style: TextStyle(fontSize: 14.sp),
-                    ),
-                  ),
-                ],
-              )
+              _createForgotRow()
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _createForgotRow() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        GestureDetector(
+          onTap: () {
+            Get.to(() => const SignUpScreen());
+          },
+          child: Text(
+            "Create Account",
+            style: TextStyle(fontSize: 14.sp),
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            Get.to(() => const ForgotPasswordScreen());
+          },
+          child: Text(
+            "Forgot Password?",
+            style: TextStyle(fontSize: 14.sp),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _signInButton() {
+    return ElevatedButton(
+      onPressed: () {},
+      child: Text(
+        "Sign In",
+        style: TextStyle(
+          fontSize: 15.sp,
+        ),
+      ),
+    );
+  }
+
+  Widget _passwordField() {
+    return TextFormField(
+      controller: _passwordController,
+      style: TextStyle(fontSize: 14.sp),
+      obscureText: hidePassword,
+      decoration: InputDecoration(
+          enabledBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: kBaseColor, width: 2),
+          ),
+          border: const OutlineInputBorder(
+            borderSide: BorderSide(color: kBaseColor),
+          ),
+          contentPadding:
+              EdgeInsets.symmetric(horizontal: 15.w, vertical: 13.w),
+          label: const Text("Password"),
+          prefixIcon: const Icon(
+            Icons.password,
+            color: kBaseColor,
+          ),
+          suffixIcon: IconButton(
+            onPressed: () {
+              hidePassword = !hidePassword;
+              if (mounted) {
+                setState(() {});
+              }
+            },
+            icon: hidePassword
+                ? const Icon(Icons.visibility)
+                : const Icon(Icons.visibility_off),
+          )),
+      validator: MultiValidator([
+        RequiredValidator(errorText: "Password is required"),
+        MinLengthValidator(6, errorText: "Password must be 6 character long.")
+      ]),
+    );
+  }
+
+  Widget _emailField() {
+    return TextFormField(
+      controller: _emailController,
+      style: TextStyle(fontSize: 14.sp),
+      decoration: InputDecoration(
+          enabledBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: kBaseColor, width: 2),
+          ),
+          border: const OutlineInputBorder(
+            borderSide: BorderSide(color: kBaseColor),
+          ),
+          contentPadding:
+              EdgeInsets.symmetric(horizontal: 15.w, vertical: 13.w),
+          label: const Text("Email"),
+          prefixIcon: const Icon(
+            Icons.email,
+            color: kBaseColor,
+          )),
+      validator: MultiValidator([
+        RequiredValidator(errorText: "Email is required"),
+        EmailValidator(errorText: "Enter a valid email")
+      ]),
+    );
+  }
+
+  Widget _signInTitle() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          "Sign In With Us",
+          style: TextStyle(fontSize: 22.sp),
+        ),
+      ],
+    );
+  }
+
+  Widget _signInLogo() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Image.asset(
+          "assets/images/splash_logo.png",
+          width: 100.w,
+        )
+      ],
     );
   }
 }
