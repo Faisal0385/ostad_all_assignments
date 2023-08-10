@@ -106,18 +106,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  // Widget _signUpButton() {
-  //   return ElevatedButton(
-  //     onPressed: () {},
-  //     child: Text(
-  //       "Sign Up",
-  //       style: TextStyle(
-  //         fontSize: 15.sp,
-  //       ),
-  //     ),
-  //   );
-  // }
-
   Widget _nextButton() {
     return ElevatedButton(
       onPressed: () {

@@ -1,43 +1,43 @@
 import 'package:blog/app/constants/colors.dart';
 import 'package:blog/app/views/auth/forgot_password/forgot_password_screen.dart';
+import 'package:blog/app/views/auth/signin/signin_screen.dart';
 import 'package:blog/app/views/auth/signup/signup_screen.dart';
-import 'package:blog/app/views/dashboard/user_dashboard/user_dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
-class SignInScreen extends StatefulWidget {
-  const SignInScreen({Key? key}) : super(key: key);
+class ResetPasswordScreen extends StatefulWidget {
+  const ResetPasswordScreen({Key? key}) : super(key: key);
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
+  State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
+  final _confirmpasswordController = TextEditingController();
+  final _newpasswordController = TextEditingController();
 
-  final _signInKey = GlobalKey<FormState>();
+  final _resetPasswordKey = GlobalKey<FormState>();
   bool hidePassword = true;
-  bool checkingSignIn = false;
+  bool checkingSubmit = false;
 
   @override
   void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
+    _confirmpasswordController.dispose();
+    _newpasswordController.dispose();
     super.dispose();
   }
 
-  handleSignIn() {
-    if (!checkingSignIn) {
-      checkingSignIn = true;
+  handleSubmit() {
+    if (!checkingSubmit) {
+      checkingSubmit = true;
       setState(() {});
       Future.delayed(const Duration(seconds: 1)).then((value) {
-        checkingSignIn = false;
+        checkingSubmit = false;
         setState(() {});
-        Get.to(() => const UserDashboardScreen());
+        Get.to(() => const SignInScreen());
       });
     }
   }
@@ -49,7 +49,7 @@ class _SignInScreenState extends State<SignInScreen> {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.w),
           child: Form(
-            key: _signInKey,
+            key: _resetPasswordKey,
             child: ListView(
               children: [
                 SizedBox(
@@ -63,19 +63,11 @@ class _SignInScreenState extends State<SignInScreen> {
                 SizedBox(
                   height: 25.w,
                 ),
-                _emailField(),
-                SizedBox(
-                  height: 15.w,
-                ),
                 _passwordField(),
                 SizedBox(
                   height: 15.w,
                 ),
-                _signInButton(),
-                SizedBox(
-                  height: 15.w,
-                ),
-                _createForgotRow()
+                _submitButton(),
               ],
             ),
           ),
@@ -84,40 +76,14 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  Widget _createForgotRow() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        GestureDetector(
-          onTap: () {
-            Get.to(() => const SignUpScreen());
-          },
-          child: Text(
-            "Create Account",
-            style: TextStyle(fontSize: 14.sp),
-          ),
-        ),
-        GestureDetector(
-          onTap: () {
-            Get.to(() => const ForgotPasswordScreen());
-          },
-          child: Text(
-            "Forgot Password?",
-            style: TextStyle(fontSize: 14.sp),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _signInButton() {
+  Widget _submitButton() {
     return ElevatedButton(
       onPressed: () {
-        if (_signInKey.currentState!.validate()) {
-          handleSignIn();
+        if (_resetPasswordKey.currentState!.validate()) {
+          handleSubmit();
         }
       },
-      child: checkingSignIn
+      child: checkingSubmit
           ? SizedBox(
           height: 30.w,
           width: 30.w,
@@ -128,7 +94,7 @@ class _SignInScreenState extends State<SignInScreen> {
           )
       )
           : Text(
-        "Next",
+        "Submit",
         style: TextStyle(
           fontSize: 15.sp,
         ),
@@ -138,7 +104,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
   Widget _passwordField() {
     return TextFormField(
-      controller: _passwordController,
+      controller: _newpasswordController,
       style: TextStyle(fontSize: 14.sp),
       obscureText: hidePassword,
       decoration: InputDecoration(
@@ -149,8 +115,8 @@ class _SignInScreenState extends State<SignInScreen> {
             borderSide: BorderSide(color: kBaseColor),
           ),
           contentPadding:
-              EdgeInsets.symmetric(horizontal: 15.w, vertical: 13.w),
-          label: const Text("Password"),
+          EdgeInsets.symmetric(horizontal: 15.w, vertical: 13.w),
+          label: const Text("New Password"),
           prefixIcon: const Icon(
             Icons.password,
             color: kBaseColor,
@@ -173,37 +139,12 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  Widget _emailField() {
-    return TextFormField(
-      controller: _emailController,
-      style: TextStyle(fontSize: 14.sp),
-      decoration: InputDecoration(
-          enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: kBaseColor, width: 2),
-          ),
-          border: const OutlineInputBorder(
-            borderSide: BorderSide(color: kBaseColor),
-          ),
-          contentPadding:
-              EdgeInsets.symmetric(horizontal: 15.w, vertical: 13.w),
-          label: const Text("Email"),
-          prefixIcon: const Icon(
-            Icons.email,
-            color: kBaseColor,
-          )),
-      validator: MultiValidator([
-        RequiredValidator(errorText: "Email is required"),
-        EmailValidator(errorText: "Enter a valid email")
-      ]),
-    );
-  }
-
   Widget _title() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "Sign In With Us",
+          "Reset Your Password",
           style: TextStyle(fontSize: 22.sp),
         ),
       ],

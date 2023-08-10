@@ -1,40 +1,39 @@
 import 'package:blog/app/constants/colors.dart';
-import 'package:blog/app/views/auth/otp/forget_otp/forgot_otp_screen.dart';
-import 'package:blog/app/views/auth/signin/signin_screen.dart';
-import 'package:blog/app/views/auth/signup/signup_screen.dart';
+import 'package:blog/app/views/auth/reset_password/reset_password_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:get/get.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
-class ForgotPasswordScreen extends StatefulWidget {
-  const ForgotPasswordScreen({Key? key}) : super(key: key);
+class ForgotOTPScreen extends StatefulWidget {
+  const ForgotOTPScreen({Key? key}) : super(key: key);
 
   @override
-  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
+  State<ForgotOTPScreen> createState() => _ForgotOTPScreenState();
 }
 
-class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+class _ForgotOTPScreenState extends State<ForgotOTPScreen> {
 
-  final _emailController = TextEditingController();
-  final _forgetKey = GlobalKey<FormState>();
-  bool sendingOtp = false;
+  final _nameController = TextEditingController();
+  final _otpKey = GlobalKey<FormState>();
+
+  bool hidePassword = true;
+  bool verifyingOtp = false;
 
   @override
   void dispose() {
-    _emailController.dispose();
     super.dispose();
   }
 
-  sendOtp() {
-    if (!sendingOtp) {
-      sendingOtp = true;
+  verifyOtp() {
+    if (!verifyingOtp) {
+      verifyingOtp = true;
       setState(() {});
       Future.delayed(const Duration(seconds: 1)).then((value) {
-        sendingOtp = false;
+        verifyingOtp = false;
         setState(() {});
-        Get.to(() => const ForgotOTPScreen());
+        Get.offAll(() => const ResetPasswordScreen());
       });
     }
   }
@@ -46,7 +45,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.w),
           child: Form(
-            key: _forgetKey,
+            key: _otpKey,
             child: ListView(
               children: [
                 SizedBox(
@@ -60,19 +59,15 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 SizedBox(
                   height: 25.w,
                 ),
-                _forgotText(),
+                _otpText(),
                 SizedBox(
                   height: 25.w,
                 ),
-                _emailField(),
+                _otpField(),
                 SizedBox(
                   height: 15.w,
                 ),
-                _getOtpButton(),
-                SizedBox(
-                  height: 15.w,
-                ),
-                _backToSignIn()
+                _verifyButton(),
               ],
             ),
           ),
@@ -81,32 +76,14 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     );
   }
 
-  Widget _backToSignIn() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-
-        GestureDetector(
-          onTap: () {
-            Get.to(() => const SignInScreen());
-          },
-          child: Text(
-            "Back To Sign In Page",
-            style: TextStyle(fontSize: 14.sp),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _getOtpButton() {
+  Widget _verifyButton() {
     return ElevatedButton(
       onPressed: () {
-        if (_forgetKey.currentState!.validate()) {
-          sendOtp();
+        if (_otpKey.currentState!.validate()) {
+          verifyOtp();
         }
       },
-      child: sendingOtp
+      child: verifyingOtp
           ? SizedBox(
           height: 30.w,
           width: 30.w,
@@ -117,46 +94,41 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           )
       )
           : Text(
-        "Get OTP",
+        "Verify",
         style: TextStyle(
-          fontSize: 13.sp,
+          fontSize: 15.sp,
         ),
       ),
     );
   }
 
-  Widget _emailField() {
+  Widget _otpField() {
     return TextFormField(
-      controller: _emailController,
+      // controller: _passwordController,
       style: TextStyle(fontSize: 14.sp),
+      // obscureText: hidePassword,
       decoration: InputDecoration(
-          enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: kBaseColor, width: 2),
-          ),
-          border: const OutlineInputBorder(
-            borderSide: BorderSide(color: kBaseColor),
-          ),
-          contentPadding:
-          EdgeInsets.symmetric(horizontal: 15.w, vertical: 13.w),
-          label: const Text("Email"),
-          prefixIcon: const Icon(
-            Icons.email,
-            color: kBaseColor,
-          )),
-      validator: MultiValidator([
-        RequiredValidator(errorText: "Email is required"),
-        EmailValidator(errorText: "Enter a valid email")
-      ]),
+        enabledBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: kBaseColor, width: 2),
+        ),
+        border: const OutlineInputBorder(
+          borderSide: BorderSide(color: kBaseColor),
+        ),
+        contentPadding:
+        EdgeInsets.symmetric(horizontal: 15.w, vertical: 13.w),
+        label: const Text("OTP Numbers"),
+      ),
+      validator: RequiredValidator(errorText: "OTP is required"),
     );
   }
 
-  Widget _forgotText() {
+  Widget _otpText() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Expanded(
           child: Text(
-            "Enter your email we'll send you a 6 digits OTP code.",
+            "Enter your 6 digits OTP code sent to your email",
             style: TextStyle(fontSize: 13.sp),
             textAlign: TextAlign.center,
           ),
@@ -170,7 +142,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "Forgot Password?",
+          "Verify OTP",
           style: TextStyle(fontSize: 22.sp),
         ),
       ],
