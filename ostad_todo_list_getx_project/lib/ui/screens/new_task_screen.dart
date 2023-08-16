@@ -132,7 +132,6 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                                     _deleteTaskController.deleteTask(
                                         _getNewTasksController
                                             .taskListModel.data![index].sId!),
-                                    // Navigator.pop(context, 'OK'),
                                     Get.back(),
                                     _getNewTasksController.getNewTasks(),
                                     _summaryCountController.getCountSummary(),
@@ -144,7 +143,6 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                           );
                         },
                         onEditTap: () {
-                          // showEditBottomSheet(_taskListModel.data![index]);
                           showStatusUpdateBottomSheet(_getNewTasksController
                               .taskListModel.data![index]);
                         },
@@ -166,10 +164,6 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Get.to(() => const AddNewTaskScreen());
-          // Navigator.push(
-          //     context,
-          //     MaterialPageRoute(
-          //         builder: (context) => const AddNewTaskScreen()));
         },
         child: const Icon(Icons.add),
       ),

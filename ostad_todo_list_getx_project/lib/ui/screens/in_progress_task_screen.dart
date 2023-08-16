@@ -1,10 +1,7 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
-import '/data/models/auth_utility.dart';
-import '/data/models/network_response.dart';
+import 'package:ostad_todo_list_getx_project/ui/state_managers/delete_task_controller.dart';
+import 'package:ostad_todo_list_getx_project/ui/state_managers/get_progress_task_controller.dart';
 import '/data/models/task_list_model.dart';
-import '/data/services/network_caller.dart';
-import '/data/utils/urls.dart';
 import '/ui/screens/update_task_status_sheet.dart';
 import '/ui/widgets/task_list_title.dart';
 import '/ui/widgets/user_profile_banner.dart';
@@ -18,83 +15,17 @@ class InProgressTaskScreen extends StatefulWidget {
 }
 
 class _InProgressTaskScreenState extends State<InProgressTaskScreen> {
-  bool _getProgressTasksInProgress = false;
-  TaskListModel _taskListModel = TaskListModel();
+  final GetProgressTaskController _getProgressTaskController =
+      Get.find<GetProgressTaskController>();
 
-  Future<void> getInProgressTasks() async {
-    _getProgressTasksInProgress = true;
-    if (mounted) {
-      setState(() {});
-    }
-    final NetworkResponse response =
-        await NetworkCaller().getRequest(Urls.inProgressTasks);
-    if (response.isSuccess) {
-      _taskListModel = TaskListModel.fromJson(response.body!);
-    } else {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('In Progress Tasks Get Failed'),
-          ),
-        );
-      }
-    }
-
-    _getProgressTasksInProgress = false;
-    if (mounted) {
-      setState(() {});
-    }
-  }
-
-  Future<void> getNewTasks() async {
-    _getProgressTasksInProgress = true;
-    if (mounted) {
-      setState(() {});
-    }
-    final NetworkResponse response =
-        await NetworkCaller().getRequest(Urls.inProgressTasks);
-    if (response.isSuccess) {
-      log(AuthUtility.userInfo.token.toString());
-      log(response.statusCode.toString());
-      log(response.body.toString());
-      _taskListModel = TaskListModel.fromJson(response.body!);
-    } else {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('In Progress Data Get Failed')));
-      }
-    }
-
-    _getProgressTasksInProgress = false;
-    if (mounted) {
-      setState(() {});
-    }
-  }
-
-  Future<void> deleteTask(String taskId) async {
-    final NetworkResponse response =
-        await NetworkCaller().getRequest(Urls.deleteTask(taskId));
-    if (response.isSuccess) {
-      _taskListModel.data!.removeWhere((element) => element.sId == taskId);
-      if (mounted) {
-        setState(() {});
-      }
-    } else {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Deletion Of Task Has Been Failed'),
-          ),
-        );
-      }
-    }
-  }
+  final DeleteTaskController _deleteTaskController =
+      Get.find<DeleteTaskController>();
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      getInProgressTasks();
+      _getProgressTaskController.getInProgressTasks();
     });
   }
 
@@ -108,63 +39,76 @@ class _InProgressTaskScreenState extends State<InProgressTaskScreen> {
             const SizedBox(
               height: 30,
             ),
-            Expanded(
-              child: _getProgressTasksInProgress
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : ListView.separated(
-                      itemCount: _taskListModel.data?.length ?? 0,
-                      itemBuilder: (context, index) {
-                        return TaskListTitle(
-                          data: _taskListModel.data![index],
-                          onDeleteTap: () {
-                            showDialog<String>(
-                              context: context,
-                              builder: (BuildContext context) => AlertDialog(
-                                title: const Text(
-                                  'Delete Task',
-                                  style: TextStyle(color: Colors.green),
-                                ),
-                                content: const Text('Are You Sure?'),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () =>
-                                        // Navigator.pop(context, 'Cancel'),
-                                        Get.back(),
-                                    child: const Text(
-                                      'Cancel',
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                      ),
+            GetBuilder<GetProgressTaskController>(builder: (_) {
+              if (_getProgressTaskController.getProgressTasksInProgress) {
+                return const Center(
+                  child: LinearProgressIndicator(),
+                );
+              }
+              return Expanded(
+                child: RefreshIndicator(
+                  onRefresh: () async {
+                    _getProgressTaskController.getInProgressTasks();
+                  },
+                  child: ListView.separated(
+                    itemCount:
+                        _getProgressTaskController.taskListModel.data?.length ??
+                            0,
+                    itemBuilder: (context, index) {
+                      return TaskListTitle(
+                        data: _getProgressTaskController
+                            .taskListModel.data![index],
+                        onDeleteTap: () {
+                          showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: const Text(
+                                'Delete Task',
+                                style: TextStyle(color: Colors.green),
+                              ),
+                              content: const Text('Are You Sure?'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () =>
+                                      // Navigator.pop(context, 'Cancel'),
+                                      Get.back(),
+                                  child: const Text(
+                                    'Cancel',
+                                    style: TextStyle(
+                                      color: Colors.red,
                                     ),
                                   ),
-                                  TextButton(
-                                    onPressed: () => {
-                                      deleteTask(
-                                          _taskListModel.data![index].sId!),
-                                      // Navigator.pop(context, 'OK'),
-                                      Get.back(),
-                                    },
-                                    child: const Text('OK'),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                          onEditTap: () {
-                            showStatusUpdateBottomSheet(
-                                _taskListModel.data![index]);
-                          },
-                        );
-                      },
-                      separatorBuilder: (BuildContext context, int index) {
-                        return const Divider(
-                          height: 4,
-                        );
-                      },
-                    ),
-            ),
+                                ),
+                                TextButton(
+                                  onPressed: () => {
+                                    _deleteTaskController.deleteTask(
+                                        _getProgressTaskController
+                                            .taskListModel.data![index].sId!),
+                                    Get.back(),
+                                    _getProgressTaskController
+                                        .getInProgressTasks(),
+                                  },
+                                  child: const Text('OK'),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                        onEditTap: () {
+                          showStatusUpdateBottomSheet(_getProgressTaskController
+                              .taskListModel.data![index]);
+                        },
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const Divider(
+                        height: 4,
+                      );
+                    },
+                  ),
+                ),
+              );
+            }),
           ],
         ),
       ),
@@ -177,10 +121,11 @@ class _InProgressTaskScreenState extends State<InProgressTaskScreen> {
       context: context,
       builder: (context) {
         return UpdateTaskStatusSheet(
-            task: task,
-            onUpdate: () {
-              getNewTasks();
-            });
+          task: task,
+          onUpdate: () {
+            _getProgressTaskController.getInProgressTasks();
+          },
+        );
       },
     );
   }
