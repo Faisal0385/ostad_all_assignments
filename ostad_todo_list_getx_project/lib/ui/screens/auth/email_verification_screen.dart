@@ -1,10 +1,10 @@
-
 import 'package:flutter/material.dart';
 import '/data/models/network_response.dart';
 import '/data/services/network_caller.dart';
 import '/data/utils/urls.dart';
 import '/ui/screens/auth/otp_verification_screen.dart';
 import '/ui/widgets/screen_background.dart';
+import 'package:get/get.dart';
 
 class EmailVerificationScreen extends StatefulWidget {
   const EmailVerificationScreen({Key? key}) : super(key: key);
@@ -32,12 +32,9 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
     }
     if (response.isSuccess) {
       if (mounted) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => OtpVerificationScreen(
-              email: _emailTEController.text.trim(),
-            ),
+        Get.to(
+          () => OtpVerificationScreen(
+            email: _emailTEController.text.trim(),
           ),
         );
       }
@@ -128,7 +125,8 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                         ),
                         TextButton(
                             onPressed: () {
-                              Navigator.pop(context);
+                              // Navigator.pop(context);
+                              Get.back();
                             },
                             child: const Text('Sign in')),
                       ],
