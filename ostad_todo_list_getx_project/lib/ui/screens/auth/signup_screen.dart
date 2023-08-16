@@ -148,9 +148,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   _firstNameTEController.clear();
                                   _lastNameTEController.clear();
                                   _mobileTEController.clear();
-                                  Get.snackbar('Success', 'Registration success!');
+                                  Get.snackbar('Success', 'Registration Successful!');
                                 }else{
-                                  Get.snackbar('Failed', 'Registration failed!');
+                                  Get.snackbar('Failed', 'Registration Failed!');
                                 }
 
                               });

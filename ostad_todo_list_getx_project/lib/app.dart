@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ostad_todo_list_getx_project/ui/state_managers/delete_task_controller.dart';
+import 'package:ostad_todo_list_getx_project/ui/state_managers/get_new_tasks_controller.dart';
+import 'package:ostad_todo_list_getx_project/ui/state_managers/summary_count_controller.dart';
 import '/ui/state_managers/signup_controller.dart';
 import '/ui/state_managers/login_controller.dart';
 import '/ui/screens/splash_screen.dart';
@@ -6,6 +9,7 @@ import 'package:get/get.dart';
 
 class TaskManagerApp extends StatefulWidget {
   static GlobalKey<NavigatorState> globalKey = GlobalKey<NavigatorState>();
+
   const TaskManagerApp({Key? key}) : super(key: key);
 
   @override
@@ -57,7 +61,7 @@ class _TaskManagerAppState extends State<TaskManagerApp> {
             border: OutlineInputBorder(borderSide: BorderSide.none)),
         elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.symmetric(vertical: 8),
+          padding: const EdgeInsets.symmetric(vertical: 8),
           elevation: 3,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         )),
@@ -74,6 +78,8 @@ class ControllerBinding extends Bindings {
   void dependencies() {
     Get.put<LoginController>(LoginController());
     Get.put<SignUpController>(SignUpController());
-    // Get.put<SummaryCountController>(SummaryCountController());
+    Get.put<SummaryCountController>(SummaryCountController());
+    Get.put<GetNewTasksController>(GetNewTasksController());
+    Get.put<DeleteTaskController>(DeleteTaskController());
   }
 }
