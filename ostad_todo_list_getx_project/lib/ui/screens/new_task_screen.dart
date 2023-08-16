@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:ostad_todo_list_getx_project/ui/state_managers/delete_task_controller.dart';
 import 'package:ostad_todo_list_getx_project/ui/state_managers/get_new_tasks_controller.dart';
@@ -119,7 +118,8 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                               actions: <Widget>[
                                 TextButton(
                                   onPressed: () =>
-                                      Navigator.pop(context, 'Cancel'),
+                                      // Navigator.pop(context, 'Cancel'),
+                                      Get.back(),
                                   child: const Text(
                                     'Cancel',
                                     style: TextStyle(
@@ -132,7 +132,8 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                                     _deleteTaskController.deleteTask(
                                         _getNewTasksController
                                             .taskListModel.data![index].sId!),
-                                    Navigator.pop(context, 'OK'),
+                                    // Navigator.pop(context, 'OK'),
+                                    Get.back(),
                                     _getNewTasksController.getNewTasks(),
                                     _summaryCountController.getCountSummary(),
                                   },
@@ -144,8 +145,8 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                         },
                         onEditTap: () {
                           // showEditBottomSheet(_taskListModel.data![index]);
-                          showStatusUpdateBottomSheet(
-                              _taskListModel.data![index]);
+                          showStatusUpdateBottomSheet(_getNewTasksController
+                              .taskListModel.data![index]);
                         },
                       );
                     },
@@ -164,10 +165,11 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const AddNewTaskScreen()));
+          Get.to(() => const AddNewTaskScreen());
+          // Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //         builder: (context) => const AddNewTaskScreen()));
         },
         child: const Icon(Icons.add),
       ),

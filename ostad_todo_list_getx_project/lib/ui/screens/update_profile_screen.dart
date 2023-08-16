@@ -126,7 +126,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         height: 100,
                         child: imageFile != null
                             ? Image.file(imagePath!)
-                            : const Icon(Icons.image, size: 50,),
+                            : const Icon(
+                                Icons.image,
+                                size: 50,
+                              ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(16.0),

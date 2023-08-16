@@ -9,6 +9,7 @@ import '/data/utils/urls.dart';
 import '/ui/screens/update_task_status_sheet.dart';
 import '/ui/widgets/task_list_title.dart';
 import '/ui/widgets/user_profile_banner.dart';
+import 'package:get/get.dart';
 
 class CancelledTaskScreen extends StatefulWidget {
   const CancelledTaskScreen({Key? key}) : super(key: key);
@@ -130,7 +131,8 @@ class _CancelledTaskScreenState extends State<CancelledTaskScreen> {
                                 actions: <Widget>[
                                   TextButton(
                                     onPressed: () =>
-                                        Navigator.pop(context, 'Cancel'),
+                                        // Navigator.pop(context, 'Cancel'),
+                                        Get.back(),
                                     child: const Text(
                                       'Cancel',
                                       style: TextStyle(
@@ -142,7 +144,8 @@ class _CancelledTaskScreenState extends State<CancelledTaskScreen> {
                                     onPressed: () => {
                                       deleteTask(
                                           _taskListModel.data![index].sId!),
-                                      Navigator.pop(context, 'OK'),
+                                      // Navigator.pop(context, 'OK'),
+                                      Get.back(),
                                     },
                                     child: const Text('OK'),
                                   ),

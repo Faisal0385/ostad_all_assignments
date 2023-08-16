@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:ostad_todo_list_getx_project/ui/state_managers/delete_task_controller.dart';
 import 'package:ostad_todo_list_getx_project/ui/state_managers/get_new_tasks_controller.dart';
 import 'package:ostad_todo_list_getx_project/ui/state_managers/summary_count_controller.dart';
+import 'package:ostad_todo_list_getx_project/ui/state_managers/update_profile_controller.dart';
+import 'package:ostad_todo_list_getx_project/ui/state_managers/update_task_controller.dart';
 import '/ui/state_managers/signup_controller.dart';
 import '/ui/state_managers/login_controller.dart';
 import '/ui/screens/splash_screen.dart';
@@ -81,5 +83,7 @@ class ControllerBinding extends Bindings {
     Get.put<SummaryCountController>(SummaryCountController());
     Get.put<GetNewTasksController>(GetNewTasksController());
     Get.put<DeleteTaskController>(DeleteTaskController());
+    Get.put<UpdateTaskController>(UpdateTaskController());
+    // Get.put<UpdateProfileController>(UpdateProfileController());
   }
 }

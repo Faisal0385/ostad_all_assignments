@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import '/data/models/network_response.dart';
+import 'package:ostad_todo_list_getx_project/ui/state_managers/update_task_controller.dart';
 import '/data/models/task_list_model.dart';
-import '/data/services/network_caller.dart';
-import '/data/utils/urls.dart';
+import 'package:get/get.dart';
 
 class UpdateTaskStatusSheet extends StatefulWidget {
   final TaskData task;
@@ -21,37 +20,13 @@ class _UpdateTaskStatusSheetState extends State<UpdateTaskStatusSheet> {
   late String _selectedTask;
   bool updateTaskInProgress = false;
 
+  final UpdateTaskController _updateTaskController =
+      Get.find<UpdateTaskController>();
+
   @override
   void initState() {
     _selectedTask = widget.task.status!;
     super.initState();
-  }
-
-  Future<void> updateTask(String taskId, String newStatus) async {
-    updateTaskInProgress = true;
-    if (mounted) {
-      setState(() {});
-    }
-    final NetworkResponse response =
-        await NetworkCaller().getRequest(Urls.updateTask(taskId, newStatus));
-    updateTaskInProgress = false;
-    if (mounted) {
-      setState(() {});
-    }
-    if (response.isSuccess) {
-      widget.onUpdate();
-      if (mounted) {
-        Navigator.pop(context);
-      }
-    } else {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Update task status has been failed'),
-          ),
-        );
-      }
-    }
   }
 
   @override
@@ -87,7 +62,17 @@ class _UpdateTaskStatusSheetState extends State<UpdateTaskStatusSheet> {
               ),
               child: ElevatedButton(
                 onPressed: () {
-                  updateTask(widget.task.sId!, _selectedTask);
+                  _updateTaskController
+                      .updateTask(widget.task.sId!, _selectedTask)
+                      .then((value) {
+                    if (value == true) {
+                      widget.onUpdate();
+                      Get.back();
+                      Get.snackbar("Success", "Update task status has been successful");
+                    } else {
+                      Get.snackbar("Failed", "Update task status has been failed");
+                    }
+                  });
                 },
                 child: const Text('Update'),
               ),
@@ -97,4 +82,5 @@ class _UpdateTaskStatusSheetState extends State<UpdateTaskStatusSheet> {
       ),
     );
   }
+
 }
