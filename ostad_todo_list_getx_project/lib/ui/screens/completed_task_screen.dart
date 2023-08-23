@@ -15,19 +15,31 @@ class CompletedTaskScreen extends StatefulWidget {
 }
 
 class _CompletedTaskScreenState extends State<CompletedTaskScreen> {
-  // bool _getCompletedTasks = false;
-  TaskListModel _taskListModel = TaskListModel();
+
+  // final GetCompletedTaskController _getCompletedTaskController =
+  //     Get.find<GetCompletedTaskController>();
+  // final DeleteTaskController _deleteTaskController =
+  //     Get.find<DeleteTaskController>();
+  //
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   WidgetsBinding.instance.addPostFrameCallback((_) {
+  //     _getCompletedTaskController.getCompletedTasks();
+  //   });
+  // }
 
   final GetCompletedTaskController _getCompletedTaskController =
-      Get.find<GetCompletedTaskController>();
+  Get.find<GetCompletedTaskController>();
+
   final DeleteTaskController _deleteTaskController =
-      Get.find<DeleteTaskController>();
+  Get.find<DeleteTaskController>();
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _getCompletedTaskController.getCompletedTasks();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _getCompletedTaskController.getCompletedTasksInProgress;
     });
   }
 
@@ -42,7 +54,7 @@ class _CompletedTaskScreenState extends State<CompletedTaskScreen> {
               height: 30,
             ),
             GetBuilder(builder: (_) {
-              if (_getCompletedTaskController.getCompletedTask) {
+              if (_getCompletedTaskController.getCompletedTasksInProgress) {
                 return const Center(
                   child: LinearProgressIndicator(),
                 );
@@ -50,7 +62,7 @@ class _CompletedTaskScreenState extends State<CompletedTaskScreen> {
               return Expanded(
                 child: RefreshIndicator(
                   onRefresh: () async {
-                    _getCompletedTaskController.getCompletedTask;
+                    _getCompletedTaskController.getCompletedTasksInProgress;
                   },
                   child: ListView.separated(
                     itemCount: _getCompletedTaskController
@@ -87,6 +99,8 @@ class _CompletedTaskScreenState extends State<CompletedTaskScreen> {
                                         _getCompletedTaskController
                                             .taskListModel.data![index].sId!),
                                     Get.back(),
+                                    _getCompletedTaskController
+                                        .getInCompletedTasks(),
                                   },
                                   child: const Text('OK'),
                                 ),
@@ -96,7 +110,7 @@ class _CompletedTaskScreenState extends State<CompletedTaskScreen> {
                         },
                         onEditTap: () {
                           showStatusUpdateBottomSheet(
-                              _taskListModel.data![index]);
+                              _getCompletedTaskController.taskListModel.data![index]);
                         },
                       );
                     },
@@ -123,7 +137,7 @@ class _CompletedTaskScreenState extends State<CompletedTaskScreen> {
         return UpdateTaskStatusSheet(
           task: task,
           onUpdate: () {
-            _getCompletedTaskController.getCompletedTasks();
+            _getCompletedTaskController.getInCompletedTasks();
           },
         );
       },

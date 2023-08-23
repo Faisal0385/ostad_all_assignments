@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ostad_todo_list_getx_project/ui/state_managers/delete_task_controller.dart';
+import 'package:ostad_todo_list_getx_project/ui/state_managers/get_cancel_task_controller.dart';
 import 'package:ostad_todo_list_getx_project/ui/state_managers/get_completed_task_controller.dart';
 import 'package:ostad_todo_list_getx_project/ui/state_managers/get_new_tasks_controller.dart';
 import 'package:ostad_todo_list_getx_project/ui/state_managers/get_progress_task_controller.dart';
@@ -88,5 +89,6 @@ class ControllerBinding extends Bindings {
     Get.put<UpdateTaskController>(UpdateTaskController());
     Get.put<GetProgressTaskController>(GetProgressTaskController());
     Get.put<GetCompletedTaskController>(GetCompletedTaskController());
+    Get.put<GetCancelTaskController>(GetCancelTaskController());
   }
 }

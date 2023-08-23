@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ostad_todo_list_getx_project/ui/screens/auth/login_screen.dart';
 import '/ui/state_managers/signup_controller.dart';
 import '/ui/widgets/screen_background.dart';
 import 'package:get/get.dart';
@@ -176,7 +177,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.pop(context);
+                          Get.to(() => const LoginScreen());
                         },
                         child: const Text("Sign In"),
                       ),
