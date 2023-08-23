@@ -78,7 +78,7 @@ class ScoreScreen extends StatelessWidget {
                                   Text(
                                     score.get('score_a').toString(),
                                     style:
-                                        Theme.of(context).textTheme.titleLarge,
+                                        Theme.of(context).textTheme.headlineMedium,
                                   ),
                                   const Text(
                                     ':',
@@ -89,7 +89,7 @@ class ScoreScreen extends StatelessWidget {
                                   Text(
                                     score.get('score_b').toString(),
                                     style:
-                                        Theme.of(context).textTheme.titleLarge,
+                                        Theme.of(context).textTheme.headlineMedium,
                                   ),
                                 ],
                               ),
