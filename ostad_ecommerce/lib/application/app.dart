@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '/presentation/ui/utility/app_colors.dart';
 import '/presentation/ui/screens/splash_screen.dart';
 
 class CraftyBay extends StatefulWidget {
@@ -12,7 +13,11 @@ class _CraftyBayState extends State<CraftyBay> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: SplashScreen(),
+      home: const SplashScreen(),
+      theme: ThemeData(
+        primarySwatch:
+            MaterialColor(AppColors.primaryColor.value, AppColors().color),
+      ),
     );
   }
 }
