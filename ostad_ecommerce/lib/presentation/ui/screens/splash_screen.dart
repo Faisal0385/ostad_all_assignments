@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import '/presentation/ui/screens/auth/email_verification_screen.dart';
 import '/presentation/ui/screens/home_screen.dart';
+import '/presentation/ui/screens/auth/email_verification_screen.dart';
 import '/presentation/ui/utility/image_assets_path.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
       //     context,
       //     MaterialPageRoute(builder: (context) => const HomeScreen()),
       //     (route) => false);
-      Get.offAll(const EmailVerificationScreen());
+      Get.offAll(const HomeScreen());
     });
   }
 
