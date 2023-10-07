@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:ostad_ecommerce/presentation/ui/utility/app_colors.dart';
+import 'package:ostad_ecommerce/presentation/ui/widgets/product_card.dart';
 import '/presentation/ui/widgets/category_card.dart';
 import '/presentation/ui/widgets/home/home_slider.dart';
 import '/presentation/ui/widgets/home/section_header.dart';
@@ -86,6 +88,39 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 16,
               ),
               SectionHeader(title: "Popular", onTap: () {}),
+              SizedBox(
+                height: 180,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 10,
+                  itemBuilder: (context, index){
+                    return ProductCard();
+                  },
+                ),
+              ),
+              SectionHeader(title: "Special", onTap: () {}),
+              SizedBox(
+                height: 180,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 10,
+                  itemBuilder: (context, index){
+                    return ProductCard();
+                  },
+                ),
+              ),
+              SectionHeader(title: "New", onTap: () {}),
+              SizedBox(
+                height: 180,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 10,
+                  itemBuilder: (context, index){
+                    return ProductCard();
+                  },
+                ),
+              ),
+
             ],
           ),
         ),
@@ -93,3 +128,5 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
+
