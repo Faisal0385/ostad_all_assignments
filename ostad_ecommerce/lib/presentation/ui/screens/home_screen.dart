@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:ostad_ecommerce/presentation/ui/utility/app_colors.dart';
-import 'package:ostad_ecommerce/presentation/ui/widgets/product_card.dart';
+import 'package:get/get.dart';
+import 'package:ostad_ecommerce/presentation/ui/screens/product_list_screen.dart';
+import '/presentation/ui/screens/category_list_screen.dart';
+import '/presentation/ui/widgets/product_card.dart';
 import '/presentation/ui/widgets/category_card.dart';
 import '/presentation/ui/widgets/home/home_slider.dart';
 import '/presentation/ui/widgets/home/section_header.dart';
@@ -71,7 +73,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 16,
               ),
               const HomeSlider(),
-              SectionHeader(title: "Categories", onTap: () {}),
+              SectionHeader(title: "Categories", onTap: () {
+                Get.to(CategoryListScreen());
+              }),
               const SizedBox(
                 height: 8,
               ),
@@ -87,7 +91,9 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(
                 height: 16,
               ),
-              SectionHeader(title: "Popular", onTap: () {}),
+              SectionHeader(title: "Popular", onTap: () {
+                Get.to(const ProductListScreen());
+              }),
               SizedBox(
                 height: 180,
                 child: ListView.builder(

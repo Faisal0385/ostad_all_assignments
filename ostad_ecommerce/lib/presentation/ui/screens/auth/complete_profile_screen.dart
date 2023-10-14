@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
-import '/presentation/ui/screens/auth/otp_verification_screen.dart';
 import '/presentation/ui/utility/image_assets_path.dart';
 
 class CompleteProfileScreen extends StatefulWidget {
